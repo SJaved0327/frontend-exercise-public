@@ -1,0 +1,49 @@
+body {
+  padding: 20px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.form-group {
+  width: 200px;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.results {
+  border: 1px solid #ccc;
+  border-top: 0;
+  width: 100%;
+  padding: 5px 0;
+  max-height: 200px;
+  overflow-y: scroll;
+}
+
+.result {
+  padding: 5px;
+  cursor: pointer;
+}
+.result:hover {
+  background-color: #eee;
+}
+
+form {
+  display: flex;
+}
+
+.form-group + .form-group {
+  margin-left: 50px;
+}
+
+input {
+  display: block;
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #ccc;
+}
