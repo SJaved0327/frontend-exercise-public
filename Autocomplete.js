@@ -11,6 +11,7 @@ const Autocomplete = (rootEl, options) => {
   this.options = options
 }
 
+const init = 
 
 */
 
@@ -65,54 +66,75 @@ export default class Autocomplete {
   // Autocomplete.prototype.updateDropdown
   // value of filtered results array with 10 items are passed
   updateDropdown(results) {
-    // 
+    // empties out <ul>
     this.listEl.innerHTML = '';
+    // appends 10 results items <li> based on current query
     this.listEl.appendChild(this.createResultsEl(results));
   }
 
+  // Autocomplete.prototype.createResultsEl
   createResultsEl(results) {
+    // create a document fragement
     const fragment = document.createDocumentFragment();
+    // iterate through results array
     results.forEach((result) => {
+      // el = <li>
       const el = document.createElement('li');
+      // <li class="result" textContent=`${result.text}`>
+      // assign values to <li> so text displayed is results[i],result.text
       Object.assign(el, {
         className: 'result',
         textContent: result.text,
       });
 
       // Pass the value to the onSelect callback
+      // on click listener added to each <li.result>
       el.addEventListener('click', (event) => {
+        // onSelect object created, value is set to this.options
         const { onSelect } = this.options;
+        // if onSelect is a function, call it and pass result.value
         if (typeof onSelect === 'function') onSelect(result.value);
       });
-
+      // each <li> appended to document fragment
       fragment.appendChild(el);
     });
+    // returns fragment with up to 10 results <li>
     return fragment;
   }
 
   createQueryInputEl() {
+    // inputEl = <input>
     const inputEl = document.createElement('input');
+    // <input type="search" name="query" autocomplete="off">
+    // assign values of object to inputEl
     Object.assign(inputEl, {
       type: 'search',
       name: 'query',
       autocomplete: 'off',
     });
-
+    // adds event listener to call function when value of <input> changes 
     inputEl.addEventListener('input', event =>
+      // creates new filtered results array
       this.onQueryChange(event.target.value));
-
+    // returns inputEl with added value and functionality
+    // createQueryInputEl(); = inputEl;
     return inputEl;
   }
 
   // Autocomplete.prototype.init
   init() {
     // Build query input
+    // creates <input> 
     this.inputEl = this.createQueryInputEl();
+    // appends <input> to rootEl of this instance of Autocomplete
     this.rootEl.appendChild(this.inputEl)
 
     // Build results dropdown
+    // this.listEl creates <ul>
     this.listEl = document.createElement('ul');
+    // ul is assigned className results
     Object.assign(this.listEl, { className: 'results' });
+    // ul.results is appended to rootEl of this instance of Autocomplete
     this.rootEl.appendChild(this.listEl);
   }
 }
