@@ -52,17 +52,19 @@ export default class Autocomplete {
 
       // axios GET call
       axios
+        // API call using compiled url
         .get(url)
 
         .then(response => {
+          // narrows down json object to only what we need
           const rows = response.data.items;
           //console.log(`rows: ${rows}`);
-
+          // iterate over rows of data to pull user login name and user id
           const APIresults = rows.map(login => ({
             text: login.login,
             value: login.id
           }))
-
+          // data array is set to value of APIresults array
           let data = APIresults;
           //console.log(`data: ${data}`);
 
@@ -132,6 +134,9 @@ export default class Autocomplete {
         className: 'result',
         textContent: result.text,
       });
+
+      //give el data-attribute of current index
+      el.setAttribute('data-number', results.indexOf(result));
 
       // Pass the value to the onSelect callback
       // on click listener added to each <li.result>
