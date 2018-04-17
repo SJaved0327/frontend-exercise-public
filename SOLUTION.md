@@ -18,3 +18,8 @@
 * jQuery docs about event delegation *
 https://learn.jquery.com/events/event-delegation/ 
 -->
+
+<!-- 
+* stackoverflow for finding first child of this *
+https://stackoverflow.com/questions/2275702/jquery-first-child-of-this
+ -->

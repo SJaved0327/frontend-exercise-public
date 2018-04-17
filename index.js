@@ -28,11 +28,37 @@ new Autocomplete(document.getElementById('gh-user'), {
 });
 
 // ====== //
-$(document).on("click", "li.result", function(event){
+$(document).on("click", "ul.results", function(event){
 	// prevents function from firing off before clicked
 	event.preventDefault();
-	console.log( $(this).text());
+
+	$(this).find(">:first-child").addClass("jqhover");
+
+	// console.log( $(this).attr("data-number"));
+	// console.log( $(this).text());
 });
+
+
+// $("li.result").on("keypress", function(e) {
+  
+// 	console.log($(this).attr("data-number"));
+
+//   if(e.which == 40 || e.which == 38) {
+
+//     const current = $(this).attr("data-number");
+//     console.log(current);
+
+    // if(current === 0) {
+    // 	$(this).css("background", "#eee");
+    //   // //menu = openNavbar.children(".dropdown-menu");
+    //   // $(this).css("outline", "blue"); // remove the pesky blue outline
+    //   // hovered = menu.find("li:hover");
+    //   // if(hovered[0]) {
+    //   //   if(e.which == 40) hovered.next().children().focus();
+    //   //   else hovered.prev().children().focus();
+    //   } else $("ul.result").find("li").first().children().focus();
+//   }
+// });
 
 
 

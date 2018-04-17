@@ -135,7 +135,7 @@ export default class Autocomplete {
         textContent: result.text,
       });
 
-      //give el data-attribute of current index
+      //give el data-attribute of current index to track it
       el.setAttribute('data-number', results.indexOf(result));
 
       // Pass the value to the onSelect callback
