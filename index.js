@@ -27,16 +27,35 @@ new Autocomplete(document.getElementById('gh-user'), {
   },
 });
 
+
 // ====== //
+
 $(document).on("click", "ul.results", function(event){
-	// prevents function from firing off before clicked
-	event.preventDefault();
+	
+		event.preventDefault();
 
-	$(this).find(">:first-child").addClass("jqhover");
+		$(this).find(">:first-child").addClass("jqhover");
 
-	// console.log( $(this).attr("data-number"));
-	// console.log( $(this).text());
+		let current = $(this).find(">:first-child");
+
+		current.addClass("jqhover");
+
+		// console.log( $(this).attr("data-number"));
+		// console.log( $(this).text());
+	});
+
+document.addEventListener("keydown", function(e){
+
+	var key = e.which
+
+	console.log(key)
+
+
 });
+
+
+
+
 
 
 // $("li.result").on("keypress", function(e) {
