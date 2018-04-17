@@ -15,7 +15,8 @@ const init =
 
 */
 
-
+// packages
+const axios = require('axios');
 
 // establish Autocomplete class
 export default class Autocomplete {
@@ -32,21 +33,61 @@ export default class Autocomplete {
     this.init();
   }
 
+  compileURL(query, numOfResults) {
+    let url = `https://api.github.com/search/users?q=${query}&per_page=${numOfResults}`
+
+    return url;
+  };
+
   // Autocomplete.prototype.onQueryChange
   onQueryChange(query) {
     // Get data for the dropdown
 
     /* At this point, query can be passed into API call to generate data to then pass along */
 
+    //if data is not defined, pass in query for API call
+    if (!this.options.data.length){
+      // pass query and this.options.numOfResults into compileURL to build request url
+      const url = this.compileURL(query, this.options.numOfResults);
 
+      // axios GET call
+      axios
+        .get(url)
 
-    // if query is defined, this returns filtered results array 
-    let results = this.getResults(query, this.options.data);
-    // since numOfResults = 10, results array is cut down to 10 items (index 0-9)
-    results = results.slice(0, this.options.numOfResults);
-    // value of results are passed  
-    this.updateDropdown(results);
-  }
+        .then(response => {
+          const rows = response.data.items;
+          //console.log(`rows: ${rows}`);
+
+          const APIresults = rows.map(login => ({
+            text: login.login,
+            value: login.id
+          }))
+
+          let data = APIresults;
+          //console.log(`data: ${data}`);
+
+          //use same code snippet
+          let results = this.getResults(query, data);
+
+          results = results.slice(0, this.options.numOfResults);
+
+          this.updateDropdown(results);
+
+        })
+        .catch(error => {
+         console.log(error);
+        });
+
+    }else{
+
+      // if query is defined, this returns filtered results array 
+      let results = this.getResults(query, this.options.data);
+      // since numOfResults = 10, results array is cut down to 10 items (index 0-9)
+      results = results.slice(0, this.options.numOfResults);
+      // value of results are passed  
+      this.updateDropdown(results);
+    }
+  };
 
   /**
    * Given an array and a query, return a filtered array based on the query.
