@@ -31,29 +31,41 @@ export default class Autocomplete {
     this.init();
   }
 
+  // Autocomplete.prototype.onQueryChange
   onQueryChange(query) {
     // Get data for the dropdown
+    // if query is defined, this returns filtered results array 
     let results = this.getResults(query, this.options.data);
+    // since numOfResults = 10, results array is cut down to 10 items (index 0-9)
     results = results.slice(0, this.options.numOfResults);
-
+    // value of results are passed  
     this.updateDropdown(results);
   }
 
   /**
    * Given an array and a query, return a filtered array based on the query.
    */
+  // Autocomplete.prototype.getResults
+  // query and data values passed through 
   getResults(query, data) {
+    // if query is not defined, return empty array
     if (!query) return [];
 
     // Filter for matching strings
+    // if query is defined:
+    // new filterd array results is created against data array
     let results = data.filter((item) => {
+      // each index of data array is matched against current query, if data item contains query, it is returned to results filtered array
       return item.text.toLowerCase().includes(query.toLowerCase());
     });
-
+    // getResults(); = return results
     return results;
   }
 
+  // Autocomplete.prototype.updateDropdown
+  // value of filtered results array with 10 items are passed
   updateDropdown(results) {
+    // 
     this.listEl.innerHTML = '';
     this.listEl.appendChild(this.createResultsEl(results));
   }
@@ -92,6 +104,7 @@ export default class Autocomplete {
     return inputEl;
   }
 
+  // Autocomplete.prototype.init
   init() {
     // Build query input
     this.inputEl = this.createQueryInputEl();
