@@ -28,5 +28,11 @@ new Autocomplete(document.getElementById('gh-user'), {
 });
 
 // ====== //
+$(document).on("click", "li.result", function(event){
+	// prevents function from firing off before clicked
+	event.preventDefault();
+	console.log( $(this).text());
+});
+
 
 
