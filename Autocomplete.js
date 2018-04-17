@@ -1,8 +1,33 @@
-export default class Autocomplete {
-  constructor(rootEl, options = {}) {
-    options = Object.assign({ numOfResults: 10, data: [] }, options);
-    Object.assign(this, { rootEl, options });
+/*
+Thoughts:
 
+const options = (data, options = {}) => {
+  this.numOfResults = 10;
+  this.data = data;
+}
+
+const Autocomplete = (rootEl, options) => {
+  this.rootEl = rootEl;
+  this.options = options
+}
+
+
+*/
+
+
+
+// establish Autocomplete class
+export default class Autocomplete {
+  // rootEl and options object are passed into each instance of Autocomplete
+  constructor(rootEl, options = {}) {
+    // options object is assigned values ...
+    // this.options.numOfResults = 10;
+    // this.options.data = [];
+    // this.options.{values of passed in object}
+    options = Object.assign({ numOfResults: 10, data: [] }, options);
+    // values of rootEl and options copied and assigned to instance of Autocomplete
+    Object.assign(this, { rootEl, options });
+    // init function called
     this.init();
   }
 
