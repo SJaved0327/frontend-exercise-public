@@ -35,6 +35,11 @@ export default class Autocomplete {
   // Autocomplete.prototype.onQueryChange
   onQueryChange(query) {
     // Get data for the dropdown
+
+    /* At this point, query can be passed into API call to generate data to then pass along */
+
+
+
     // if query is defined, this returns filtered results array 
     let results = this.getResults(query, this.options.data);
     // since numOfResults = 10, results array is cut down to 10 items (index 0-9)
