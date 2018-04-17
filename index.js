@@ -44,11 +44,58 @@ $(document).on("click", "ul.results", function(event){
 		// console.log( $(this).text());
 	});
 
+// add event listener to whole window
 document.addEventListener("keydown", function(e){
 
-	var key = e.which
+	// capture value of keycode when pressed 
+	// only keydown allows arrow key capture
+	var key = e.which;
+	// console.log(key)
 
-	console.log(key)
+	// if ($("li").hasClass("jqhover")){
+		// console.log("true")
+
+		// set current value to <li> with jqhover class
+		let current = $("li.jqhover");
+		// set currentNum to the value of data-number attribute (index)
+		let currentNum = current.attr("data-number");
+		//console.log(currentNum);
+
+		//Capture down arrow
+		if (key == 40){
+
+			// set next to sibling element
+			let next = current.next();
+			// set nextNum to data-number of sibling element
+			let nextNum = next.attr("data-number");
+			// if nextNum is defined and its data-number value is greater than currentNum (bc ascending order that means it exists)
+			if (nextNum && nextNum > currentNum){
+				// everything shifts up
+				current.removeClass("jqhover");
+				next.addClass("jqhover");
+			}
+
+		};
+
+		//Up arrow
+		// if (key == 38){
+
+		// 	let current = $("li.jqhover");
+
+		// 	let next = current.next();
+
+		// }
+
+
+	// }else{
+		
+	// 	console.log("false")
+
+
+	// }
+	
+	
+
 
 
 });
