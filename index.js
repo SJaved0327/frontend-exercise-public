@@ -25,6 +25,14 @@ new Autocomplete(document.getElementById('gh-user'), {
   },
 });
 
+// OMDB Titles
+new Autocomplete(document.getElementById('gh-user'), {
+  onSelect: (ghUserId) => {
+    console.log('selected github user id:', ghUserId);
+  },
+});
+
+
 
 // ====== //
 
