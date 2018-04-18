@@ -12,6 +12,20 @@ const data = usStates.map(state => ({
   value: state.abbreviation
 }));
 
+new Autocomplete(document.getElementById('state'), {
+  data,
+  onSelect: (stateCode) => {
+    console.log('selected state:', stateCode);
+  },
+});
+
+// Github Users
+new Autocomplete(document.getElementById('gh-user'), {
+  onSelect: (ghUserId) => {
+    console.log('selected github user id:', ghUserId);
+  },
+});
+
 // OMDB
 // const OMDB = {
 // 	"base_url": `http://www.omdbapi.com/?s=${query}&apikey=${keys.OMDB.apiKey}`,
@@ -21,21 +35,6 @@ const data = usStates.map(state => ({
 // const Github = {
 // 	"base_url": `https://api.github.com/search/users?q=${query}&per_page=${numOfResults}`
 // }
-
-new Autocomplete(document.getElementById('state'), {
-  data,
-  onSelect: (stateCode) => {
-    console.log('selected state:', stateCode);
-  },
-});
-
-
-// Github Users
-new Autocomplete(document.getElementById('gh-user'), {
-  onSelect: (ghUserId) => {
-    console.log('selected github user id:', ghUserId);
-  },
-});
 
 // // OMDB Titles
 // new Autocomplete(document.getElementById('gh-user'), {

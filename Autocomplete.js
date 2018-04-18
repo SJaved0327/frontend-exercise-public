@@ -5,12 +5,13 @@ import keys from './keys.json';
 // ============================== //
 
 // establish Autocomplete class
-const Autocomplete = function(rootEl, data, options = {}){
+const Autocomplete = function(rootEl, options = {}){
   // rootEl and options object are passed into each instance of Autocomplete
   this.numOfResults = 10;
   this.rootEl = rootEl;
   // options object is assigned values ...
-  this.options = Object.assign({ data: [] }, options);
+  options = Object.assign({ data: [] }, options);
+  Object.assign(this, { options });
   // init function called
   this.init();
 }
@@ -23,33 +24,25 @@ Autocomplete.prototype.compileURL = function(query, numOfResults, keys){
 
 Autocomplete.prototype.onQueryChange = function(query){
   // Get data for the dropdown
-
   /* At this point, query can be passed into API call to generate data to then pass along */
-
   //if data is not defined, pass in query for API call
   if (!this.options.data.length){
     // pass query and this.options.numOfResults into compileURL to build request url
     const url = this.compileURL(query, this.numOfResults, keys);
-
     // axios GET call
     axios
-      // API call using compiled url
       .get(url)
-
       .then(response => {
-        
         //GITHUB
         const rows = response.data.items;
         //console.log(`rows: ${rows}`);
         // iterate over rows of data to pull user login name and user id
-        // GITHUB
         const APIresults = rows.map(login => ({
           text: login.login,
           value: login.id
         }))
 
         // // OMDB
-
         // const rows = response.data.Search;
         // console.log(`rows: ${rows}`);
         // // OMDB
@@ -75,12 +68,10 @@ Autocomplete.prototype.onQueryChange = function(query){
       });
 
   }else{
-
     // if query is defined, this returns filtered results array 
     let results = this.getResults(query, this.options.data);
-    // since numOfResults = 10, results array is cut down to 10 items (index 0-9)
     results = results.slice(0, this.numOfResults);
-    // value of results are passed  
+    // value of results are passed into dropdown
     this.updateDropdown(results);
   }
 };
@@ -88,25 +79,17 @@ Autocomplete.prototype.onQueryChange = function(query){
   /**
    * Given an array and a query, return a filtered array based on the query.
    */
-  // Autocomplete.prototype.getResults
-  // query and data values passed through 
 Autocomplete.prototype.getResults = function(query, data){
   // if query is not defined, return empty array
   if (!query) return [];
-
-  // Filter for matching strings
-  // if query is defined:
   // new filterd array results is created against data array
   let results = data.filter((item) => {
-    // each index of data array is matched against current query, if data item contains query, it is returned to results filtered array
     return item.text.toLowerCase().includes(query.toLowerCase());
   });
-  // getResults(); = return results
   return results;
 }
 
-  // Autocomplete.prototype.updateDropdown
-  // value of filtered results array with 10 items are passed
+// value of filtered results array with 10 items are passed
 Autocomplete.prototype.updateDropdown = function(results){
   // empties out <ul>
   this.listEl.innerHTML = '';
@@ -114,24 +97,18 @@ Autocomplete.prototype.updateDropdown = function(results){
   this.listEl.appendChild(this.createResultsEl(results));
 }
 
-  // Autocomplete.prototype.createResultsEl
 Autocomplete.prototype.createResultsEl = function(results){
   // create a document fragement
   const fragment = document.createDocumentFragment();
   // iterate through results array
   results.forEach((result) => {
-    // el = <li>
     const el = document.createElement('li');
-    // <li class="result" textContent=`${result.text}`>
-    // assign values to <li> so text displayed is results[i],result.text
     Object.assign(el, {
       className: 'result',
       textContent: result.text,
     });
-
     //give el data-attribute of current index to track it
     el.setAttribute('data-number', results.indexOf(result));
-
     // Pass the value to the onSelect callback
     // on click listener added to each <li.result>
     el.addEventListener('click', (event) => {
@@ -173,7 +150,6 @@ Autocomplete.prototype.init = function(){
   this.inputEl = this.createQueryInputEl();
   // appends <input> to rootEl of this instance of Autocomplete
   this.rootEl.appendChild(this.inputEl)
-
   // Build results dropdown
   // this.listEl creates <ul>
   this.listEl = document.createElement('ul');
