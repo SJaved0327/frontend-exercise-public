@@ -5,11 +5,23 @@ import keys from './keys.json';
 import './main.css';
 
 
+
 // US States
 const data = usStates.map(state => ({
   text: state.name,
   value: state.abbreviation
 }));
+
+// OMDB
+// const OMDB = {
+// 	"base_url": `http://www.omdbapi.com/?s=${query}&apikey=${keys.OMDB.apiKey}`,
+// 	"apiKey": keys.OMDB.apiKey
+// }
+
+// const Github = {
+// 	"base_url": `https://api.github.com/search/users?q=${query}&per_page=${numOfResults}`
+// }
+
 new Autocomplete(document.getElementById('state'), {
   data,
   onSelect: (stateCode) => {
@@ -25,12 +37,12 @@ new Autocomplete(document.getElementById('gh-user'), {
   },
 });
 
-// OMDB Titles
-new Autocomplete(document.getElementById('gh-user'), {
-  onSelect: (ghUserId) => {
-    console.log('selected github user id:', ghUserId);
-  },
-});
+// // OMDB Titles
+// new Autocomplete(document.getElementById('gh-user'), {
+//   onSelect: (ghUserId) => {
+//     console.log('selected github user id:', ghUserId);
+//   },
+// });
 
 
 

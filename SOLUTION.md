@@ -26,7 +26,17 @@
 	// keydown for arrow keys
 	// https://stackoverflow.com/questions/5597060/detecting-arrow-key-presses-in-javascript
  -->
- <!-- 
- 	// OMDB Docs
- 	// http://www.omdbapi.com/
-  -->
+
+<!-- 
+	// OMDB Docs
+	// http://www.omdbapi.com/
+-->
+
+<!-- 
+	// When not to use fat arrow functions
+	// https://dmitripavlutin.com/when-not-to-use-arrow-functions-in-javascript/
+ -->
+
+
+
+ 
