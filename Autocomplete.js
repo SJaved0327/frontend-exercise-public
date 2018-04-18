@@ -1,17 +1,9 @@
 // packages
 const axios = require('axios');
 // imports
-import keys from './keys.json';
+// import keys from './keys.json';
+import URL from './URL'
 // ============================== //
-
-// // OMDB
-//   const rows = response.data.Search;
-//   console.log(`rows: ${rows}`);
-//   // OMDB
-//   const APIresults = rows.map(item => ({
-//     text: item.Title,
-//     value: item.imdbID
-//   }))
 
 // establish Autocomplete class
 const Autocomplete = function(rootEl, options = {}){
@@ -23,47 +15,20 @@ const Autocomplete = function(rootEl, options = {}){
   Object.assign(this, { options });
   // init function called
   this.init();
+  this.url = new URL ("", "https://api.github.com/search/users?q=", 2, "login", "id");
+  console.log(this.url);
 };
-
-// Autocomplete.prototype.compileURL = function(query, numOfResults, keys){
-//   let url = `https://api.github.com/search/users?q=${query}&per_page=${numOfResults}`
-//   // let url = `http://www.omdbapi.com/?s=${query}&apikey=${keys.OMDB.apiKey}`
-//   return url;
-// };
 
 // where query gets passed for the first time
 Autocomplete.prototype.onQueryChange = function(query){
   // Get data for the dropdown
-  /* At this point, query can be passed into API call to generate data to then pass along */
   //if data is not defined, pass in query for API call
-  if (!this.options.data.length){
-    // pass query and this.options.numOfResults into compileURL to build request url
-    //const url = this.compileURL(query, this.numOfResults, keys);
-    const { compileURL } = this.options;
-    console.log(compileURL);
-
-    let url = compileURL(query, this.numOfResults);
+  if (!this.options.data.length){    
+    // compile URl to ready it for API call
+    this.url.compileURL(query);
     // axios GET call
-    axios
-      .get(url)
-      .then(response => {
-        //GITHUB
-        const rows = response.data.items;
-        // iterate over rows of data to pull user login name and user id
-        const APIresults = rows.map(login => ({
-          text: login.login,
-          value: login.id
-        }))
-        // data array is set to value of APIresults array
-        let data = APIresults;
-        //use same code snippet
-        let results = this.getResults(query, data);
-        results = results.slice(0, this.numOfResults);
-        this.updateDropdown(results);
-      })
-      .catch(error => {
-       console.log(error);
-      });
+    this.url.getAPI(query, this.getResults.bind(this), this.updateDropdown.bind(this))
+
   }else{
     // if query is defined, returns filtered results array and builds dropdown
     let results = this.getResults(query, this.options.data);

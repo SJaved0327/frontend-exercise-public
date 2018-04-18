@@ -1,10 +1,8 @@
 // imports
 import Autocomplete from './Autocomplete';
 import usStates from './us-states';
-import keys from './keys.json';
+//import keys from './keys.json';
 import './main.css';
-
-
 
 // US States
 let data = usStates.map(state => ({
@@ -19,58 +17,17 @@ new Autocomplete(document.getElementById('state'), {
   },
 });
 
-const OMDB = "http://www.omdbapi.com/?s=";
-
-// Github Users
-const URL = (key, baseURL) => {
-  if (!key.length) {
-  	this.key = "";
-  }else {
-  	this.key = "&apikey="+key;
-  }
-  this.baseURL = baseURL
-  this.url = ""
-}
-
-URL.prototype.compileURL = (query, key) => {
-  if (this.key === ""){
-  	let compiledUrl = this.baseURL+query
-  }
-  let compiledUrl = this.baseURL+query+key; 
-
-  this.url = compiledUrl;
-};
-
-//const url = `https://api.github.com/search/users?q=${query}&per_page=${numOfResults}`
-
-
-new Autocomplete(document.getElementById('gh-user'), {
-  data = new URL("", "https://api.github.com/search/users?q="),
+new Autocomplete(document.getElementById('gh-user'), 
+	{
   onSelect: (ghUserId) => {
     console.log('selected github user id:', ghUserId);
   },
 });
 
-// OMDB
-// const OMDB = {
-// 	"base_url": `http://www.omdbapi.com/?s=${query}&apikey=${keys.OMDB.apiKey}`,
-// 	"apiKey": keys.OMDB.apiKey
-// }
-
-// const Github = {
-// 	"base_url": `https://api.github.com/search/users?q=${query}&per_page=${numOfResults}`
-// }
-
-// // OMDB Titles
-// new Autocomplete(document.getElementById('gh-user'), {
-//   onSelect: (ghUserId) => {
-//     console.log('selected github user id:', ghUserId);
-//   },
-// });
-
-
 
 // ====== //
+
+// starting to work on jQuery
 
 $(document).on("click", "ul.results", function(event){
 	
@@ -119,51 +76,10 @@ document.addEventListener("keydown", function(e){
 
 		};
 
-		//Up arrow
-		// if (key == 38){
-
-		// 	let current = $("li.jqhover");
-
-		// 	let next = current.next();
-
-		// }
-
-
-	// }else{
-		
-	// 	console.log("false")
-
-
-	// }
-
+		//Need to capture up arrow
 
 });
 
-
-
-
-
-
-// $("li.result").on("keypress", function(e) {
-  
-// 	console.log($(this).attr("data-number"));
-
-//   if(e.which == 40 || e.which == 38) {
-
-//     const current = $(this).attr("data-number");
-//     console.log(current);
-
-    // if(current === 0) {
-    // 	$(this).css("background", "#eee");
-    //   // //menu = openNavbar.children(".dropdown-menu");
-    //   // $(this).css("outline", "blue"); // remove the pesky blue outline
-    //   // hovered = menu.find("li:hover");
-    //   // if(hovered[0]) {
-    //   //   if(e.which == 40) hovered.next().children().focus();
-    //   //   else hovered.prev().children().focus();
-    //   } else $("ul.result").find("li").first().children().focus();
-//   }
-// });
 
 
 
