@@ -18,6 +18,9 @@ const init =
 // packages
 const axios = require('axios');
 
+// imports
+import keys from './keys.json';
+
 // establish Autocomplete class
 export default class Autocomplete {
   // rootEl and options object are passed into each instance of Autocomplete
@@ -33,9 +36,9 @@ export default class Autocomplete {
     this.init();
   }
 
-  compileURL(query, numOfResults) {
-    let url = `https://api.github.com/search/users?q=${query}&per_page=${numOfResults}`
-
+  compileURL(query, numOfResults, keys) {
+    //let url = `https://api.github.com/search/users?q=${query}&per_page=${numOfResults}`
+    let url = `http://www.omdbapi.com/?s=${query}&apikey=${keys.OMDB.apiKey}`
     return url;
   };
 
@@ -48,7 +51,7 @@ export default class Autocomplete {
     //if data is not defined, pass in query for API call
     if (!this.options.data.length){
       // pass query and this.options.numOfResults into compileURL to build request url
-      const url = this.compileURL(query, this.options.numOfResults);
+      const url = this.compileURL(query, this.options.numOfResults, keys);
 
       // axios GET call
       axios
@@ -57,13 +60,26 @@ export default class Autocomplete {
 
         .then(response => {
           // narrows down json object to only what we need
-          const rows = response.data.items;
+          //GITHUB
+          // const rows = response.data.items;
           //console.log(`rows: ${rows}`);
           // iterate over rows of data to pull user login name and user id
-          const APIresults = rows.map(login => ({
-            text: login.login,
-            value: login.id
+          // GITHUB
+          // const APIresults = rows.map(login => ({
+          //   text: login.login,
+          //   value: login.id
+          // }))
+
+          // OMDB
+
+          const rows = response.data.Search;
+          console.log(`rows: ${rows}`);
+          // OMDB
+          const APIresults = rows.map(item => ({
+            text: item.Title,
+            value: item.imdbID
           }))
+
           // data array is set to value of APIresults array
           let data = APIresults;
           //console.log(`data: ${data}`);

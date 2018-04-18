@@ -1,4 +1,3 @@
-
 // imports
 import Autocomplete from './Autocomplete';
 import usStates from './us-states';
@@ -92,9 +91,6 @@ document.addEventListener("keydown", function(e){
 
 
 	// }
-	
-	
-
 
 
 });
