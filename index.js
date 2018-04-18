@@ -7,7 +7,7 @@ import './main.css';
 
 
 // US States
-const data = usStates.map(state => ({
+let data = usStates.map(state => ({
   text: state.name,
   value: state.abbreviation
 }));
@@ -19,8 +19,33 @@ new Autocomplete(document.getElementById('state'), {
   },
 });
 
+const OMDB = "http://www.omdbapi.com/?s=";
+
 // Github Users
+const URL = (key, baseURL) => {
+  if (!key.length) {
+  	this.key = "";
+  }else {
+  	this.key = "&apikey="+key;
+  }
+  this.baseURL = baseURL
+  this.url = ""
+}
+
+URL.prototype.compileURL = (query, key) => {
+  if (this.key === ""){
+  	let compiledUrl = this.baseURL+query
+  }
+  let compiledUrl = this.baseURL+query+key; 
+
+  this.url = compiledUrl;
+};
+
+//const url = `https://api.github.com/search/users?q=${query}&per_page=${numOfResults}`
+
+
 new Autocomplete(document.getElementById('gh-user'), {
+  data = new URL("", "https://api.github.com/search/users?q="),
   onSelect: (ghUserId) => {
     console.log('selected github user id:', ghUserId);
   },

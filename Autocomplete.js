@@ -4,6 +4,15 @@ const axios = require('axios');
 import keys from './keys.json';
 // ============================== //
 
+// // OMDB
+//   const rows = response.data.Search;
+//   console.log(`rows: ${rows}`);
+//   // OMDB
+//   const APIresults = rows.map(item => ({
+//     text: item.Title,
+//     value: item.imdbID
+//   }))
+
 // establish Autocomplete class
 const Autocomplete = function(rootEl, options = {}){
   // rootEl and options object are passed into each instance of Autocomplete
@@ -14,64 +23,51 @@ const Autocomplete = function(rootEl, options = {}){
   Object.assign(this, { options });
   // init function called
   this.init();
-}
-
-Autocomplete.prototype.compileURL = function(query, numOfResults, keys){
-  let url = `https://api.github.com/search/users?q=${query}&per_page=${numOfResults}`
-  // let url = `http://www.omdbapi.com/?s=${query}&apikey=${keys.OMDB.apiKey}`
-  return url;
 };
 
+// Autocomplete.prototype.compileURL = function(query, numOfResults, keys){
+//   let url = `https://api.github.com/search/users?q=${query}&per_page=${numOfResults}`
+//   // let url = `http://www.omdbapi.com/?s=${query}&apikey=${keys.OMDB.apiKey}`
+//   return url;
+// };
+
+// where query gets passed for the first time
 Autocomplete.prototype.onQueryChange = function(query){
   // Get data for the dropdown
   /* At this point, query can be passed into API call to generate data to then pass along */
   //if data is not defined, pass in query for API call
   if (!this.options.data.length){
     // pass query and this.options.numOfResults into compileURL to build request url
-    const url = this.compileURL(query, this.numOfResults, keys);
+    //const url = this.compileURL(query, this.numOfResults, keys);
+    const { compileURL } = this.options;
+    console.log(compileURL);
+
+    let url = compileURL(query, this.numOfResults);
     // axios GET call
     axios
       .get(url)
       .then(response => {
         //GITHUB
         const rows = response.data.items;
-        //console.log(`rows: ${rows}`);
         // iterate over rows of data to pull user login name and user id
         const APIresults = rows.map(login => ({
           text: login.login,
           value: login.id
         }))
-
-        // // OMDB
-        // const rows = response.data.Search;
-        // console.log(`rows: ${rows}`);
-        // // OMDB
-        // const APIresults = rows.map(item => ({
-        //   text: item.Title,
-        //   value: item.imdbID
-        // }))
-
         // data array is set to value of APIresults array
         let data = APIresults;
-        //console.log(`data: ${data}`);
-
         //use same code snippet
         let results = this.getResults(query, data);
-
         results = results.slice(0, this.numOfResults);
-
         this.updateDropdown(results);
-
       })
       .catch(error => {
        console.log(error);
       });
-
   }else{
-    // if query is defined, this returns filtered results array 
+    // if query is defined, returns filtered results array and builds dropdown
     let results = this.getResults(query, this.options.data);
     results = results.slice(0, this.numOfResults);
-    // value of results are passed into dropdown
     this.updateDropdown(results);
   }
 };
@@ -114,6 +110,7 @@ Autocomplete.prototype.createResultsEl = function(results){
     el.addEventListener('click', (event) => {
       // onSelect object created, value is set to this.options
       const { onSelect } = this.options;
+      console.log(onSelect);
       // if onSelect is a function, call it and pass result.value
       if (typeof onSelect === 'function') onSelect(result.value);
     });
