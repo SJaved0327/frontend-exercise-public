@@ -1,9 +1,8 @@
-// packages
-const axios = require('axios');
 
 // imports
 import Autocomplete from './Autocomplete';
 import usStates from './us-states';
+import keys from './keys.json';
 import './main.css';
 
 

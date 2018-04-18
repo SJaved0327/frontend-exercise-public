@@ -23,3 +23,8 @@ https://learn.jquery.com/events/event-delegation/
 * stackoverflow for finding first child of this *
 https://stackoverflow.com/questions/2275702/jquery-first-child-of-this
  -->
+
+<!-- 
+	* keydown for arrow keys *
+	https://stackoverflow.com/questions/5597060/detecting-arrow-key-presses-in-javascript
+ -->
